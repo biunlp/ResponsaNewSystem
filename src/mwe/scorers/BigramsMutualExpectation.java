@@ -31,6 +31,7 @@ public class BigramsMutualExpectation implements MWEScorer {
 	
 	public double score(String ngram) {
 		int k = Integer.parseInt( m_ngramsData.get(ngram).split(" ")[0]);
+		// PROBABILITY OF THE N-GRAM
 		double p = (double)k/m_bigramsNum;
 		double score = p*normalizedExpectation(ngram);
 		return score;
@@ -41,8 +42,12 @@ public class BigramsMutualExpectation implements MWEScorer {
 		String[] bigramData = m_ngramsData.get(bigram).split(" ");
 		int k = Integer.parseInt(bigramData[0]);
 		int omittedNgramsSum = 0;
+		// there are four-gram?
 		for (int i=1; i< bigramData.length; i++)
 			omittedNgramsSum += Integer.parseInt(bigramData[i]);
+		// divide by 0.5 which means bigram
+		// I suggest to write multiple by (bigramData.length-1) 
+		// right?
 		double FPE = 0.5*(k+omittedNgramsSum);
 		score = k/FPE;
 		return score;
